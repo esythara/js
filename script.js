@@ -1,18 +1,25 @@
 $(function () {
-  var galleryImage = $(".gallery").find("img").first();
+  function logEvent() {
+    console.log("mouse was clicked or key was pressed");
+  }
+
+  $("html").on("click keydown", logEvent);
+
   var images = [
-    "images/laptop-moblie_small.jpg",
+    "images/laptop-mobile_small.jpg",
     "images/laptop-on-table_small.jpg",
     "images/people-office-group-team_small.jpg",
   ];
 
   var i = 0;
-  setInterval(function () {
+  var galleryImage = $(".gallery").find("img");
+  galleryImage.on("click", switchToNextImage);
+
+  function switchToNextImage() {
     i = (i + 1) % images.length;
     galleryImage.fadeOut(function () {
-      $(this).attr("src", images[i]);
-      $(this).fadeIn();
+      galleryImage.attr("src", images[i]).fadeIn();
     });
-    console.log(galleryImage.attr("src"));
-  }, 4000);
+  }
 });
+
