@@ -1,25 +1,22 @@
 $(function () {
-  function logEvent() {
-    console.log("mouse was clicked or key was pressed");
-  }
+  var galleryItems = $(".gallery").find("img");
+  galleryItems.css("width", "33%").css("opacity", "0.7");
 
-  $("html").on("click keydown", logEvent);
+  galleryItems.mouseenter(function () {
+    $(this).stop().fadeTo(200, 1);
+  });
 
-  var images = [
-    "images/laptop-mobile_small.jpg",
-    "images/laptop-on-table_small.jpg",
-    "images/people-office-group-team_small.jpg",
-  ];
+  galleryItems.mouseleave(function () {
+    $(this).stop().fadeTo(200, 0.8);
+  });
 
-  var i = 0;
-  var galleryImage = $(".gallery").find("img");
-  galleryImage.on("click", switchToNextImage);
-
-  function switchToNextImage() {
-    i = (i + 1) % images.length;
-    galleryImage.fadeOut(function () {
-      galleryImage.attr("src", images[i]).fadeIn();
-    });
-  }
+  galleryItems.click(function () {
+    var source = $(this).attr("src");
+    var image = $("<img>").attr("src", source).css("width", "100%");
+    $(".lightbox").empty().append(image).fadeIn(200);
+  });
+  $(".lightbox").click(function () {
+    $(this).stop().fadeOut();
+  })
 });
 
